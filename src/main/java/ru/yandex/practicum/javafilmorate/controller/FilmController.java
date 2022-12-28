@@ -11,8 +11,10 @@ import ru.yandex.practicum.javafilmorate.model.Film;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class FilmController {
@@ -22,10 +24,7 @@ public class FilmController {
 
     @GetMapping("/films")
     public List<Film> findAll() {
-        List<Film> filmsList = new ArrayList<>();
-        for (Film el:films.values()) {
-            filmsList.add(el);
-        }
+        List<Film> filmsList = films.values().stream().collect(Collectors.toList());
         return filmsList;
     }
 

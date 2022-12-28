@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -21,10 +22,7 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> findAll() {
-        List<User> usersList = new ArrayList<>();
-        for (User el:users.values()) {
-            usersList.add(el);
-        }
+        List<User> usersList = users.values().stream().collect(Collectors.toList());
         return usersList;
     }
 
