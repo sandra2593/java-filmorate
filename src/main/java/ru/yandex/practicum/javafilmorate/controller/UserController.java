@@ -19,14 +19,15 @@ public class UserController {
     private final HashMap<Integer, User> users = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private int userCounter = 0;
+    private final String QUERY_PATH = "/users";
 
-    @GetMapping("/users")
+    @GetMapping(QUERY_PATH)
     public List<User> findAll() {
         List<User> usersList = users.values().stream().collect(Collectors.toList());
         return usersList;
     }
 
-    @PostMapping(value = "/users")
+    @PostMapping(value = QUERY_PATH)
     public User create(@Valid @RequestBody User user) {
         userCounter++;
         user.setId(userCounter);
@@ -46,7 +47,7 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/users")
+    @PutMapping(value = QUERY_PATH)
     public User update(@Valid @RequestBody User user) {
         if (user.getLogin().contains(" ")) {
             throw new ValidationException("Логин не может содержать пробелы");

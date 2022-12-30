@@ -21,14 +21,15 @@ public class FilmController {
     private final HashMap<Integer, Film> films = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private int filmCounter = 0;
+    private final String QUERY_PATH = "/films";
 
-    @GetMapping("/films")
+    @GetMapping(QUERY_PATH)
     public List<Film> findAll() {
         List<Film> filmsList = films.values().stream().collect(Collectors.toList());
         return filmsList;
     }
 
-    @PostMapping("/films")
+    @PostMapping(QUERY_PATH)
     public Film create(@Valid @RequestBody Film film) {
         filmCounter++;
         film.setId(filmCounter);
@@ -43,7 +44,7 @@ public class FilmController {
         }
     }
 
-    @PutMapping(value = "/films")
+    @PutMapping(value = QUERY_PATH)
     public Film update(@Valid @RequestBody Film film) {
         if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))) {
             throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");

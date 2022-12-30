@@ -69,7 +69,7 @@ public class FilmValidationTest {
     public void filmLongDescriptionReturnErrorDescription() {
         Film film = Film.builder()
                 .name("name")
-                .description("descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription")
+                .description("description lenght more 200.description lenght more 200.description lenght more 200.description lenght more 200.description lenght more 200.description lenght more 200.description lenght more 200.description lenght more 200.")
                 .releaseDate(LocalDate.of(1995,12,28))
                 .duration(10)
                 .build();
