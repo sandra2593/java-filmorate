@@ -1,5 +1,6 @@
 package ru.yandex.practicum.javafilmorate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -23,4 +26,10 @@ public class Film {
     LocalDate releaseDate;
     @Positive
     int duration;
+    @JsonIgnore
+    private final Set<Integer> likeSet = new HashSet<>();
+
+    public int getCountLike() {
+        return likeSet.size();
+    }
 }

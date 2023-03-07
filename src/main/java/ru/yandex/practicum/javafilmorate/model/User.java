@@ -1,5 +1,6 @@
 package ru.yandex.practicum.javafilmorate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,8 @@ import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,4 +25,6 @@ public class User {
     @NotNull
     @PastOrPresent
     LocalDate birthday;
+    @JsonIgnore
+    private final Set<Integer> friendSet = new HashSet<>();
 }

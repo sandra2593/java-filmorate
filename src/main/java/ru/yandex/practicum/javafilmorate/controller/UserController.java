@@ -1,67 +1,57 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.javafilmorate.model.User;
+import ru.yandex.practicum.javafilmorate.service.UserService;
+import ru.yandex.practicum.javafilmorate.storage.UserStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.javafilmorate.exception.UserAlreadyExistException;
-import ru.yandex.practicum.javafilmorate.exception.ValidationException;
-import ru.yandex.practicum.javafilmorate.model.User;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
-    private final HashMap<Integer, User> users = new HashMap<>();
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private int userCounter = 0;
     private final String QUERY_PATH = "/users";
+    private final UserService userService;
+    private final UserStorage userStorage;
+
+    @Autowired
+    public UserController(UserService userService, UserStorage userStorage) {
+        this.userService = userService;
+        this.userStorage = userStorage;
+    }
 
     @GetMapping(QUERY_PATH)
     public List<User> findAll() {
-        List<User> usersList = users.values().stream().collect(Collectors.toList());
-        return usersList;
+        return userStorage.findAll();
     }
 
     @PostMapping(value = QUERY_PATH)
     public User create(@Valid @RequestBody User user) {
-        userCounter++;
-        user.setId(userCounter);
-        if (user.getLogin().contains(" ")) {
-            throw new ValidationException("Логин не может содержать пробелы");
-        } else if (users.containsKey(user.getId())) {
-            throw new UserAlreadyExistException("Такой пользователь уже есть");
-        } else if ((user.getName() == null) | (user.getName() == "")) {
-            user.setName(user.getLogin());
-            log.debug("Создан пользователь.");
-            users.put(user.getId(),user);
-            return users.get(user.getId());
-        } else {
-            log.debug("Создан пользователь.");
-            users.put(user.getId(),user);
-            return users.get(user.getId());
-        }
+       return userStorage.create(user);
     }
 
     @PutMapping(value = QUERY_PATH)
     public User update(@Valid @RequestBody User user) {
-        if (user.getLogin().contains(" ")) {
-            throw new ValidationException("Логин не может содержать пробелы");
-        } else if (!users.containsKey(user.getId())) {
-            throw new UserAlreadyExistException("Такой юзера нет в списке");
-        } else if ((user.getName() == null) | (user.getName() == "")) {
-            user.setName(user.getLogin());
-            log.debug("Обновлен фильм.");
-            users.put(user.getId(),user);
-            return users.get(user.getId());
-        } else {
-            log.debug("Обновлен фильм.");
-            users.put(user.getId(),user);
-            return users.get(user.getId());
-        }
+        return userStorage.update(user);
     }
+
+    @PutMapping("/users/{id}/friends/{friendId}")
+    public void addFriend(@PathVariable int id, @PathVariable int friendId) { userService.addNewFriend(id, friendId); }
+
+    @DeleteMapping("/users/{id}/friends/{friendId}")
+    public void deleteFriend(@PathVariable int id, @PathVariable int friendId) { userService.deleteFriend(id, friendId); }
+
+    @GetMapping("/users/{id}/friends")
+    public List<User> getFriends(@PathVariable int id) { return userService.getFriendList(id); }
+
+    @GetMapping("/users/{id}/friends/common/{otherId}")
+    public List<User> getCommonFriends(@PathVariable int id, @PathVariable int otherId) { return userService.getCommonFriendsList(id, otherId);}
+
+    @GetMapping("/users/{id}")
+    public User getUserId(@PathVariable int id) { return userStorage.getUserId(id); }
+
 }
