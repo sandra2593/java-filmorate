@@ -5,12 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.service.UserService;
 import ru.yandex.practicum.javafilmorate.storage.UserStorage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 public class UserController {

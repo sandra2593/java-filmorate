@@ -9,7 +9,6 @@ import ru.yandex.practicum.javafilmorate.exception.UserAlreadyExistException;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
 import ru.yandex.practicum.javafilmorate.model.User;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
