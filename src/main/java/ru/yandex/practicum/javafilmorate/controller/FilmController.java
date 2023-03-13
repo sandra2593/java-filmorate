@@ -1,59 +1,51 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.yandex.practicum.javafilmorate.exception.UserAlreadyExistException;
-import ru.yandex.practicum.javafilmorate.exception.ValidationException;
 import ru.yandex.practicum.javafilmorate.model.Film;
+import ru.yandex.practicum.javafilmorate.service.FilmService;
+import ru.yandex.practicum.javafilmorate.storage.FilmStorage;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class FilmController {
-    private final HashMap<Integer, Film> films = new HashMap<>();
-    private static final Logger log = LoggerFactory.getLogger(FilmController.class);
-    private int filmCounter = 0;
+
     private final String QUERY_PATH = "/films";
+    private final FilmService filmService;
+    private final FilmStorage filmStorage;
+
+    @Autowired
+    public FilmController(FilmService filmService, FilmStorage filmStorage) {
+        this.filmService = filmService;
+        this.filmStorage = filmStorage;
+    }
 
     @GetMapping(QUERY_PATH)
     public List<Film> findAll() {
-        List<Film> filmsList = films.values().stream().collect(Collectors.toList());
-        return filmsList;
+        return filmStorage.findAll();
     }
 
     @PostMapping(QUERY_PATH)
     public Film create(@Valid @RequestBody Film film) {
-        filmCounter++;
-        film.setId(filmCounter);
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))) {
-            throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");
-        } else if (films.containsKey(film.getId())) {
-            throw new ValidationException("Такой фильм уже есть");
-        } else {
-            log.debug("Создан фильм.");
-            films.put(film.getId(), film);
-            return films.get(film.getId());
-        }
+        return filmStorage.create(film);
     }
 
     @PutMapping(value = QUERY_PATH)
     public Film update(@Valid @RequestBody Film film) {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))) {
-            throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");
-        } else if (!films.containsKey(film.getId())) {
-            throw new ValidationException("Такой фильма нет в списке");
-        }  else {
-            log.debug("Обновлен фильм.");
-            films.put(film.getId(),film);
-            return films.get(film.getId());
-        }
+        return filmStorage.update(film);
     }
+
+    @PutMapping("/films/{id}/like/{userId}")
+    public void addLike(@PathVariable int id, @PathVariable int userId) { filmService.addNewLike(id, userId); }
+
+    @DeleteMapping("/films/{id}/like/{userId}")
+    public void deleteLike(@PathVariable int id, @PathVariable int userId) { filmService.deleteLike(id, userId); }
+
+    @GetMapping("/films/popular")
+    public List<Film> getTopNPopularFilms(@RequestParam(required = false) Integer count) { return filmService.getTopFilms(count); }
+
+    @GetMapping("/films/{id}")
+    public Film getUserId(@PathVariable int id) { return filmStorage.getFilmId(id); }
 }
