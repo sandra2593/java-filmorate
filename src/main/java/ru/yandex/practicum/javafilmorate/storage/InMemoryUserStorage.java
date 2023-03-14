@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.javafilmorate.controller.UserController;
+import ru.yandex.practicum.javafilmorate.exception.EnumOfExceptions;
 import ru.yandex.practicum.javafilmorate.exception.NotFoundException;
 import ru.yandex.practicum.javafilmorate.exception.UserAlreadyExistException;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
@@ -28,9 +29,9 @@ public class InMemoryUserStorage implements UserStorage{
         userCounter++;
         user.setId(userCounter);
         if (user.getLogin().contains(" ")) {
-            throw new ValidationException("Логин не может содержать пробелы");
+            throw new ValidationException(EnumOfExceptions.NO_SPACE_IN_USER.getExp());
         } else if (users.containsKey(user.getId())) {
-            throw new UserAlreadyExistException("Такой пользователь уже есть");
+            throw new UserAlreadyExistException(EnumOfExceptions.DOUBLE_USER.getExp());
         } else if ((user.getName() == null) | (user.getName() == "")) {
             user.setName(user.getLogin());
             log.debug("Создан пользователь.");
@@ -45,9 +46,9 @@ public class InMemoryUserStorage implements UserStorage{
 
     public User update(User user) {
         if (user.getLogin().contains(" ")) {
-            throw new ValidationException("Логин не может содержать пробелы");
+            throw new ValidationException(EnumOfExceptions.NO_SPACE_IN_USER.getExp());
         } else if (!users.containsKey(user.getId())) {
-            throw new UserAlreadyExistException("Такой юзера нет в списке");
+            throw new UserAlreadyExistException(EnumOfExceptions.NOT_IN_LIST.getExp());
         } else if ((user.getName() == null) | (user.getName() == "")) {
             user.setName(user.getLogin());
             log.debug("Обновлен фильм.");
@@ -62,7 +63,7 @@ public class InMemoryUserStorage implements UserStorage{
 
     public User getUserId(int id) {
         if (users.get(id) == null) {
-            throw new NotFoundException("Пользователь не найден");
+            throw new NotFoundException(EnumOfExceptions.NO_USER.getExp());
         }
         return users.get(id);
     }

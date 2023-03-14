@@ -26,5 +26,7 @@ public class User {
     @PastOrPresent
     LocalDate birthday;
     @JsonIgnore
+    FriendStatus friendStatus = FriendStatus.NONE;
+    @JsonIgnore
     private final Set<Integer> friendSet = new HashSet<>();
 }
