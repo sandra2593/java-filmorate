@@ -27,6 +27,10 @@ public class Film {
     @Positive
     int duration;
     @JsonIgnore
+    Genre genre;
+    @JsonIgnore
+    Rating rating;
+    @JsonIgnore
     private final Set<Integer> likeSet = new HashSet<>();
 
     public int getCountLike() {
