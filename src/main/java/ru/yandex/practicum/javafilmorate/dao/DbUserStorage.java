@@ -16,9 +16,7 @@ import java.util.Map;
 
 @Component("DbUserStorage")
 public class DbUserStorage implements UserStorage {
-
-    private final static int NOT_ACCEPTED_STATUS_ID = 2;
-
+    
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -42,6 +40,7 @@ public class DbUserStorage implements UserStorage {
 
         return getUserId(newUser.getId());
     }
+
     @Override
     public User update(User newUser) {
         String sql = "UPDATE users SET email = ?, login = ?, name = ?, birthday = ? WHERE id = ?";
