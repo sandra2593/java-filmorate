@@ -23,7 +23,6 @@ import java.util.Map;
 @Component("DbFilmStorage")
 public class DbFilmStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
-    private final int TOP_N_DEFAULT_VALUE = 10;
 
     @Autowired
     public DbFilmStorage(JdbcTemplate jdbcTemplate) {
@@ -65,7 +64,9 @@ public class DbFilmStorage implements FilmStorage {
                             }
 
                             @Override
-                            public int getBatchSize() {return newFilm.getGenres().size();}
+                            public int getBatchSize() {
+                                return newFilm.getGenres().size();
+                            }
                         });
             }
         }
@@ -99,6 +100,7 @@ public class DbFilmStorage implements FilmStorage {
                                 ps.setLong(1, newFilm.getId());
                                 ps.setLong(2, newFilm.getGenres().get(i).getId());
                             }
+
                             @Override
                             public int getBatchSize() {
                                 return newFilm.getGenres().size();
@@ -166,7 +168,6 @@ public class DbFilmStorage implements FilmStorage {
 
     @Override
     public List<Film> getTopFilms(Integer count) {
-        // Получим топ N популярных фильмов
         String sql = "SELECT f.id," +
                 "       f.rating_id," +
                 "       r.name AS rating_name," +
@@ -189,7 +190,7 @@ public class DbFilmStorage implements FilmStorage {
                 "ORDER BY f.rate DESC " +
                 "LIMIT ?;";
 
-        return jdbcTemplate.query(sql, new FilmMapper(), count != null ? count : TOP_N_DEFAULT_VALUE);
+        return jdbcTemplate.query(sql, new FilmMapper(), count != null ? count : 10);
     }
-    
+
 }
