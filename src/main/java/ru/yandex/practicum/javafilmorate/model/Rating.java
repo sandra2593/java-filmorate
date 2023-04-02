@@ -1,16 +1,17 @@
 package ru.yandex.practicum.javafilmorate.model;
 
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
-
-//import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class Rating {
     @Id
-    private int id;
-    private String name;
+    int id;
+    String name;
 }

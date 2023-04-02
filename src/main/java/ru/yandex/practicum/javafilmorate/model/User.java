@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Data
 @Builder
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class User {
     @Id
     int id;
