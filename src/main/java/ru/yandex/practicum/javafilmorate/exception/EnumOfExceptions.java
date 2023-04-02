@@ -8,7 +8,13 @@ public enum EnumOfExceptions {
     NO_USER ("Пользователь не найден"),
     DOUBLE_USER ("Такой пользователь уже есть"),
     NO_SPACE_IN_USER ("Логин не может содержать пробелы"),
-    NOT_IN_LIST ("Такой юзера нет в списке");
+    NOT_IN_LIST ("Такой юзера нет в списке"),
+    NO_GENRE ("Жанр c таким ID не найден"),
+    NO_RATING("Рейтинг c таким ID не найден"),
+    UPDATE_FRIEND("Ошибка при обновлении списка друзей"),
+    DELETE_FRIEND("Ошибка при удалении из списка друзей"),
+    UPDATE_LIKES("Ошибка при добавлении лайка"),
+    DELETE_LIKES("Ошибка при удалении лайка");
 
     private String exp;
 
