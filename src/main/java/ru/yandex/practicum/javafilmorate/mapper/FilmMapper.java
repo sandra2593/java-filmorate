@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmMapper implements RowMapper<Film> {
-
-    private final static String GENRES_SEPARATOR = "~";
-
     @Override
     public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
         Rating r = Rating.builder()
@@ -33,8 +30,8 @@ public class FilmMapper implements RowMapper<Film> {
 
     private List<Genre> mapGenres(String genresIdsString, String genresNames) {
         if (genresIdsString != null) {
-            String[] parsedGenresIds = genresIdsString.split(GENRES_SEPARATOR);
-            String[] parsedGenresNames = genresNames.split(GENRES_SEPARATOR);
+            String[] parsedGenresIds = genresIdsString.split("~");
+            String[] parsedGenresNames = genresNames.split("~");
             List<Genre> l = new ArrayList<>();
             for (int i = 0; i < parsedGenresIds.length; i++) {
                 l.add(Genre.builder()
