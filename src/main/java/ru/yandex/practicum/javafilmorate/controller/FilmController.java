@@ -13,7 +13,6 @@ import java.util.Collection;
 @RestController
 public class FilmController {
 
-    private final String QUERY_PATH = "/films";
     private final FilmStorage filmStorage;
     private final LikesStorage likesStorage;
 
@@ -23,31 +22,39 @@ public class FilmController {
         this.filmStorage = filmStorage;
     }
 
-    @GetMapping(QUERY_PATH)
+    @GetMapping("/films")
     public Collection<Film> findAll() {
         return filmStorage.findAll();
     }
 
-    @PostMapping(QUERY_PATH)
+    @PostMapping("/films")
     public Film create(@Valid @RequestBody Film film) {
         return filmStorage.create(film);
     }
 
-    @PutMapping(value = QUERY_PATH)
+    @PutMapping(value = "/films")
     public Film update(@Valid @RequestBody Film film) {
         return filmStorage.update(film);
     }
 
     @PutMapping("/films/{id}/like/{userId}")
-    public void addLike(@PathVariable int id, @PathVariable int userId) { likesStorage.addLike(id, userId); }
+    public void addLike(@PathVariable int id, @PathVariable int userId) {
+        likesStorage.addLike(id, userId);
+    }
 
     @DeleteMapping("/films/{id}/like/{userId}")
-    public void deleteLike(@PathVariable int id, @PathVariable int userId) { likesStorage.deleteLike(id, userId); }
+    public void deleteLike(@PathVariable int id, @PathVariable int userId) {
+        likesStorage.deleteLike(id, userId);
+    }
 
     @GetMapping("/films/popular")
-    public Collection<Film> getTopNPopularFilms(@RequestParam(required = false) Integer count) { return filmStorage.getTopFilms(count); }
+    public Collection<Film> getTopNPopularFilms(@RequestParam(required = false) Integer count) {
+        return filmStorage.getTopFilms(count);
+    }
 
     @GetMapping("/films/{id}")
-    public Film getUserId(@PathVariable int id) { return filmStorage.getFilmId(id); }
+    public Film getUserId(@PathVariable int id) {
+        return filmStorage.getFilmId(id);
+    }
 
 }
