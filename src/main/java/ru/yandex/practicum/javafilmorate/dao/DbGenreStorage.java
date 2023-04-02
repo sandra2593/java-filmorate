@@ -14,7 +14,6 @@ import java.util.Collection;
 
 @Component("DbGenreStorage")
 public class DbGenreStorage  implements GenreStorage {
-
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -37,4 +36,5 @@ public class DbGenreStorage  implements GenreStorage {
             throw new NotFoundException(EnumOfExceptions.NO_GENRE.getExp());
         }
     }
+
 }

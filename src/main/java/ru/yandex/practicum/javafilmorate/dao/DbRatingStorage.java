@@ -14,7 +14,6 @@ import java.util.List;
 
 @Component("DbRatingStorage")
 public class DbRatingStorage  implements RatingStorage {
-
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -37,4 +36,5 @@ public class DbRatingStorage  implements RatingStorage {
             throw new NotFoundException(EnumOfExceptions.NO_RATING.getExp());
         }
     }
+
 }

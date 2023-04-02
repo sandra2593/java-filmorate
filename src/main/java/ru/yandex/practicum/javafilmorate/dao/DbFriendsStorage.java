@@ -14,7 +14,6 @@ import java.util.Collection;
 
 @Component("DbFriendsStorage")
 public class DbFriendsStorage implements FriendsStorage {
-
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -57,4 +56,5 @@ public class DbFriendsStorage implements FriendsStorage {
                 ") common_friends ON u.id = common_friends.friend_id;";
         return jdbcTemplate.query(sql, new UserMapper(), id, otherId);
     }
+
 }

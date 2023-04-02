@@ -10,7 +10,6 @@ import ru.yandex.practicum.javafilmorate.storage.LikesStorage;
 
 @Component("DbLikesStorage")
 public class DbLikesStorage implements LikesStorage {
-
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -41,4 +40,5 @@ public class DbLikesStorage implements LikesStorage {
             throw new NotFoundException(EnumOfExceptions.DELETE_LIKES.getExp());
         }
     }
+
 }

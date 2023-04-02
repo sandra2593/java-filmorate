@@ -16,7 +16,6 @@ import java.util.Map;
 
 @Component("DbUserStorage")
 public class DbUserStorage implements UserStorage {
-    
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -69,4 +68,5 @@ public class DbUserStorage implements UserStorage {
             throw new NotFoundException(EnumOfExceptions.NO_USER.getExp());
         }
     }
+    
 }
