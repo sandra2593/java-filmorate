@@ -9,7 +9,6 @@ import ru.yandex.practicum.javafilmorate.model.Rating;
 import ru.yandex.practicum.javafilmorate.storage.RatingStorage;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/mpa")
