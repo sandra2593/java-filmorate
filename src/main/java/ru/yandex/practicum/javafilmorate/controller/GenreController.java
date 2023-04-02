@@ -30,4 +30,5 @@ public class GenreController {
     public Genre getGenreById(@PathVariable int genreId) {
         return genreStorage.getGenreById(genreId);
     }
+
 }

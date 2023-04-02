@@ -31,4 +31,5 @@ public class RatingController {
     public Rating getRatingById(@PathVariable int mpaId) {
         return ratingStorage.getRatingById(mpaId);
     }
+
 }
