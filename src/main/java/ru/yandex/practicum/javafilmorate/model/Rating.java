@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 
 @Data
 @Builder
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Rating {
     @Id
     int id;

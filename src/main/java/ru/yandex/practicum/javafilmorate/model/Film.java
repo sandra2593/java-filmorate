@@ -14,7 +14,7 @@ import java.util.List;
 
 @Data
 @Builder
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
     @Id
     int id;
