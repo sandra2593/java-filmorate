@@ -19,14 +19,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Component("DbFilmStorage")
 public class DbFilmStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
-    private final static int TOP_N_DEFAULT_VALUE = 10;
-    private final LocalDate EARLIEST_RELEASE_DATE = LocalDate.of(1895,12,28);
-
+    private final int TOP_N_DEFAULT_VALUE = 10;
 
     @Autowired
     public DbFilmStorage(JdbcTemplate jdbcTemplate) {
@@ -34,7 +31,7 @@ public class DbFilmStorage implements FilmStorage {
     }
 
     public Film create(Film newFilm) {
-        if (newFilm.getReleaseDate().isBefore(EARLIEST_RELEASE_DATE)) {
+        if (newFilm.getReleaseDate().isBefore(LocalDate.of(1895,12,28))) {
             throw new ValidationException(EnumOfExceptions.RELEASE_DATE.getExp());
         } else {
             SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
@@ -194,4 +191,5 @@ public class DbFilmStorage implements FilmStorage {
 
         return jdbcTemplate.query(sql, new FilmMapper(), count != null ? count : TOP_N_DEFAULT_VALUE);
     }
+    
 }
