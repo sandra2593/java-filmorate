@@ -40,5 +40,4 @@ public class DbLikesStorage implements LikesStorage {
             throw new NotFoundException(EnumOfExceptions.DELETE_LIKES.getExp());
         }
     }
-
 }

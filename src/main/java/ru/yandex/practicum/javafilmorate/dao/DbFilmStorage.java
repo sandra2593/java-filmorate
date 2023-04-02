@@ -192,5 +192,4 @@ public class DbFilmStorage implements FilmStorage {
 
         return jdbcTemplate.query(sql, new FilmMapper(), count != null ? count : 10);
     }
-
 }

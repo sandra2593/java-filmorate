@@ -68,5 +68,4 @@ public class DbUserStorage implements UserStorage {
             throw new NotFoundException(EnumOfExceptions.NO_USER.getExp());
         }
     }
-    
 }

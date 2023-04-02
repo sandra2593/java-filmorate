@@ -36,5 +36,4 @@ public class DbRatingStorage  implements RatingStorage {
             throw new NotFoundException(EnumOfExceptions.NO_RATING.getExp());
         }
     }
-
 }

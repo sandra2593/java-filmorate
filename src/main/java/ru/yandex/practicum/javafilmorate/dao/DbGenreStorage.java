@@ -36,5 +36,4 @@ public class DbGenreStorage  implements GenreStorage {
             throw new NotFoundException(EnumOfExceptions.NO_GENRE.getExp());
         }
     }
-
 }
