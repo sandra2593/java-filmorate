@@ -32,14 +32,14 @@ public class FilmMapper implements RowMapper<Film> {
         if (genresIdsString != null) {
             String[] parsedGenresIds = genresIdsString.split("~");
             String[] parsedGenresNames = genresNames.split("~");
-            List<Genre> l = new ArrayList<>();
+            List<Genre> genres = new ArrayList<>();
             for (int i = 0; i < parsedGenresIds.length; i++) {
-                l.add(Genre.builder()
+                genres.add(Genre.builder()
                         .id(Integer.parseInt(parsedGenresIds[i]))
                         .name(parsedGenresNames[i])
                         .build());
             }
-            return l;
+            return genres;
         }
         return List.of();
     }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.javafilmorate.model.Rating;
-import ru.yandex.practicum.javafilmorate.storage.RatingStorage;
+import ru.yandex.practicum.javafilmorate.service.RatingService;
 
 import java.util.Collection;
 
@@ -14,21 +14,21 @@ import java.util.Collection;
 @RequestMapping("/mpa")
 public class RatingController {
 
-    private final RatingStorage ratingStorage;
+    private final RatingService ratingService;
 
     @Autowired
-    public RatingController(RatingStorage ratingStorage) {
-        this.ratingStorage = ratingStorage;
+    public RatingController(RatingService ratingService) {
+        this.ratingService = ratingService;
     }
 
     @GetMapping()
     public Collection<Rating> getRatings() {
-        return ratingStorage.getRatings();
+        return ratingService.getRatings();
     }
 
     @GetMapping("/{mpaId}")
     public Rating getRatingById(@PathVariable int mpaId) {
-        return ratingStorage.getRatingById(mpaId);
+        return ratingService.getRatingById(mpaId);
     }
 
 }
