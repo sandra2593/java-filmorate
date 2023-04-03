@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class DbRatingStorageTest {
     private final DbRatingStorage dbRatingStorage;
-    private Collection<Rating> d_rating = List.of(
+    private Collection<Rating> dRating = List.of(
             Rating.builder().id(1).name("G").build(),
             Rating.builder().id(2).name("PG").build(),
             Rating.builder().id(3).name("PG-13").build(),
@@ -36,7 +36,7 @@ public class DbRatingStorageTest {
 
         assertThat(dbRating)
                 .hasSize(5)
-                .containsAll(d_rating);
+                .containsAll(dRating);
     }
 
     @Test

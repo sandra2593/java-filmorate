@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class DbGenreStorageTest {
     private final DbGenreStorage dbGenreStorage;
-    private Collection<Genre> d_genres = List.of(
+    private Collection<Genre> dGenres = List.of(
             Genre.builder().id(1).name("Комедия").build(),
             Genre.builder().id(2).name("Драма").build(),
             Genre.builder().id(3).name("Мультфильм").build(),
@@ -33,11 +33,11 @@ public class DbGenreStorageTest {
 
     @Test
     public void testGenreList() {
-        Collection<Genre> DbGenres = dbGenreStorage.getGenres();
+        Collection<Genre> dbGenres = dbGenreStorage.getGenres();
 
-        assertThat(DbGenres)
+        assertThat(dbGenres)
                 .hasSize(6)
-                .containsAll(d_genres);
+                .containsAll(dGenres);
     }
 
     @Test
