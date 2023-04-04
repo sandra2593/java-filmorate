@@ -1,6 +1,6 @@
 # java-filmorate
 Схема базы данных
-![ER диаграма](img.png)
+![ER диаграма](img_1.png)
 
-Перечисления Genre, FriendStatus, Rating будут таблицыми-словарями в БД
+Изменила старую проверенную схему из ветки add-diagram
 

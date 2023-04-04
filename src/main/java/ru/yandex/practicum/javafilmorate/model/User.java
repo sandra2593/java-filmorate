@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -13,8 +14,9 @@ import java.util.Set;
 
 @Data
 @Builder
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
+    @Id
     int id;
     @NotBlank
     @Email
@@ -26,7 +28,12 @@ public class User {
     @PastOrPresent
     LocalDate birthday;
     @JsonIgnore
-    FriendStatus friendStatus = FriendStatus.NONE;
-    @JsonIgnore
     private final Set<Integer> friendSet = new HashSet<>();
+
+    public String getName() {
+        if (name == "") {
+            return login;
+        }
+        return name;
+    }
 }

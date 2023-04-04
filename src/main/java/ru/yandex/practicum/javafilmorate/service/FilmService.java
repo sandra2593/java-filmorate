@@ -1,48 +1,40 @@
 package ru.yandex.practicum.javafilmorate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.javafilmorate.model.Film;
-import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.storage.FilmStorage;
-import ru.yandex.practicum.javafilmorate.storage.UserStorage;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class FilmService implements FilmServiceInterface {
+public class FilmService {
 
     private final FilmStorage filmStorage;
-    private final UserStorage userStorage;
 
     @Autowired
-    public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
+    public FilmService(@Qualifier("DbFilmStorage") FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
-        this.userStorage = userStorage;
     }
 
-    public void addNewLike(int id, int userId) {
-        User user = userStorage.getUserId(userId);
-        Film film = filmStorage.getFilmId(id);
-
-        film.getLikeSet().add(user.getId());
+    public Film create(Film newFilm) {
+        return filmStorage.create(newFilm);
     }
 
-    public void deleteLike(int id, int userId) {
-        User user = userStorage.getUserId(userId);
-        Film film = filmStorage.getFilmId(id);
-
-        film.getLikeSet().remove(user.getId());
+    public Film update(Film newFilm) {
+        return filmStorage.update(newFilm);
     }
 
-    public List<Film> getTopFilms(Integer cnt) {
-        if (cnt == null) {
-            cnt = 10;
-        }
-        List<Film> filmList =  filmStorage.findAll().stream().collect(Collectors.toList());
-        return filmList.stream().sorted(Comparator.comparingInt(Film::getCountLike).reversed()).limit(cnt).collect(Collectors.toList());
+    public List<Film> findAll() {
+        return filmStorage.findAll();
     }
 
+    public Film getFilmId(int id) {
+        return filmStorage.getFilmId(id);
+    }
+
+    public List<Film> getTopFilms(Integer count) {
+        return filmStorage.getTopFilms(count);
+    }
 }

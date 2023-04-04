@@ -1,9 +1,17 @@
 package ru.yandex.practicum.javafilmorate.model;
 
-public enum Rating {
-    G,
-    PG,
-    PG13,
-    R,
-    NC17
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.Id;
+
+@Data
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Rating {
+    @Id
+    int id;
+    String name;
 }
